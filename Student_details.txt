@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+class Student
+{
+	private int rollno;
+	private String name;
+	private String [] courses;
+	public int getRollno() {
+		return rollno;
+	}
+	public void setRollno(int rollno) {
+		this.rollno = rollno;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String[] getCourses() {
+		return courses;
+	}
+	public void setCourses(String[] courses) {
+		this.courses = courses;
+	}
+	
+}
+
+public class StudentDetails {
+
+	public static void main(String[] args) {
+		Student stud= new Student();
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter Roll number");
+		int rollno= sc.nextInt();
+		
+		System.out.println("Enter Name of a student");
+		String name= sc.next();
+		
+		System.out.println("How many courses do you want to register?");
+		int noofcourses = sc.nextInt();
+		
+		String[] courses = new String[noofcourses];
+		
+		for(int i=0; i<courses.length;i++)
+		{
+			courses[i]= sc.next();
+		}
+		stud.setRollno(rollno);
+		stud.setName(name);
+		stud.setCourses(courses);
+		
+		System.out.println(stud.getRollno());
+		System.out.println(stud.getName());
+		for (int j=0;j<stud.getCourses().length;j++)
+		{
+			System.out.println(stud.getCourses()[j]);
+		}
+		
+	}
+
+}

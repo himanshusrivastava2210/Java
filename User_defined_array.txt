@@ -1,0 +1,22 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class User_defined_array {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Enter the size of an array: ");
+        int size = scan.nextInt();
+
+        int[] value = new int[size];
+
+        System.out.println("Enter the values in an Arrary(" + size + "):");
+
+        String[] valuearray = new String[size];
+
+        for (int i = 0; i < size; i++) {
+            valuearray[i] = scan.next();
+        }
+        System.out.println(Arrays.toString(valuearray));
+    }
+}
