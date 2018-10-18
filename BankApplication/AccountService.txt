@@ -1,0 +1,18 @@
+package com.capgemini.service;
+
+import com.capgemini.beans.Account;
+import com.capgemini.exception.DepositSuccessfulException;
+import com.capgemini.exception.InsufficientOpeningBalanceException;
+import com.capgemini.exception.InvalidAccountNumberException;
+
+
+public interface AccountService {
+
+	Account createAccount(int accountNumber, int amount) throws  InsufficientOpeningBalanceException;
+	
+//	Account searchAccount(int accountNumber) throws InvalidAccountNumberException;
+	
+//	Account DepositeAmount(int accountNumber,int amount) throws DepositSuccessfulException,InvalidAccountNumberException;
+	
+
+}

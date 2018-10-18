@@ -1,0 +1,63 @@
+package com.capgemini.test;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.capgemini.beans.Account;
+import com.capgemini.exception.InsufficientOpeningBalanceException;
+import com.capgemini.repository.AccountRepository;
+import com.capgemini.service.AccountService;
+import com.capgemini.service.AccountServiceImp1;
+
+public class AccountTest {
+	
+	AccountService accountService;
+	
+	@Mock
+	AccountRepository accountRepository;
+	
+
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		
+		accountService = new AccountServiceImp1(accountRepository);
+	}
+
+	/*@Before
+	public void setUp1() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		accountService = new AccountServiceImp1(accountRepository);
+	
+	}
+	*/
+	
+	
+	
+	@Test(expected=com.capgemini.exception.InsufficientOpeningBalanceException.class)
+	public void WhenTheAmountIsLessThan500SystemShouldThrowException() throws InsufficientOpeningBalanceException
+	{
+		accountService.createAccount(101, 400);
+	}
+	
+	@Test
+	public void whenTheValidInfoIsPassedAccountShouldBeCreatedSuccessfully() throws InsufficientOpeningBalanceException
+	{
+		Account account = new Account();
+		account.setAccountNumber(101);
+		account.setAmount(5000);
+		when(accountRepository.save(account)).thenReturn(true);
+		assertEquals(account,accountService.createAccount(101,5000));
+			
+	}
+	
+	
+	
+	
+	
+}
