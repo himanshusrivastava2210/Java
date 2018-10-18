@@ -1,0 +1,40 @@
+package Client;
+
+import Exception.InsufficientBalanceException;
+import Exception.InsufficientOpeningBalanceException;
+import Exception.InvalidAccountNumberException;
+import ICICIBank.ICICIBank;
+
+public class Client {
+
+    public static void main(String[] args) {
+        ICICIBank bank = new ICICIBank();
+        
+        try {
+            System.out.println(bank.createAccount(101, 3000));
+        } catch (InsufficientOpeningBalanceException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println(bank.createAccount(102, 3000));
+        } catch (InsufficientOpeningBalanceException e) {
+            e.printStackTrace();
+        }
+        
+        try
+        {
+            System.out.println("Balance = "+bank.withdrawAmount(101, 2000));
+            System.out.println("Balance = "+bank.DepositeAmount(102, 4000));
+            System.out.println("Balance = "+bank.FunderTransfer(101, 1000));
+            System.out.println("Balance = "+bank.FunderTransfer(102, 1000));
+        }catch(InvalidAccountNumberException i)
+        {
+            System.out.println("Invalid account number ");
+        }
+        catch(InsufficientBalanceException ibe){
+            System.out.println("insufficient balance");
+        }
+
+    }
+
+}
