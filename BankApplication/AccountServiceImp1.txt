@@ -1,0 +1,99 @@
+package com.capgemini.service;
+
+import com.capgemini.beans.Account;
+import com.capgemini.exception.InsufficientBalanceException;
+import com.capgemini.exception.InsufficientOpeningBalanceException;
+import com.capgemini.exception.InvalidAccountNumberException;
+import com.capgemini.repository.AccountRepository;
+
+public class AccountServiceImp1 implements AccountService {
+
+	AccountRepository accountRepository;
+
+	public AccountServiceImp1(AccountRepository accountRepository) {
+		super();
+		this.accountRepository = accountRepository;
+	}
+	
+	
+	
+	@Override
+	
+		public Account createAccount(int accountNumber, int amount) throws InsufficientOpeningBalanceException
+		{
+		 	
+			if(amount<500)
+		 		
+		 	{
+		 		throw new InsufficientOpeningBalanceException();
+		 		
+		 	}
+		 	
+		 	Account account = new Account();
+		 	account.setAccountNumber(accountNumber);
+		 	
+		 	account.setAmount(amount);
+		 	
+		 	if(accountRepository.save(account))
+		 			{
+		 				return account;
+		 			}
+		 	
+		 	
+			return null;
+		}
+	
+	
+
+
+public boolean isaccountExist(int accountNumber) throws InvalidAccountNumberException {
+
+    Account accountFound=accountRepository.searchAccount(accountNumber);
+    return accountFound == null ? false : true;
+    
+}
+
+
+
+    
+
+@Override
+public int depositAmount(int accountNumber, int amount) throws InvalidAccountNumberException{
+    int updatedAmount = 0;
+        if(isaccountExist(accountNumber)){
+            updatedAmount = accountRepository.updateBalance(amount);
+            updatedAmount = amount + accountRepository.searchAccount(accountNumber).getAmount();
+            
+            
+        }
+        else{
+            throw new InvalidAccountNumberException();
+        }
+
+       return updatedAmount;
+}   
+  
+
+
+  
+@Override
+public int  withdrawAmount(int accountNumber, int amount) throws InvalidAccountNumberException,InsufficientBalanceException{
+    int updatedAmount = 0;
+
+        if(isaccountExist(accountNumber)){
+        
+        updatedAmount =  accountRepository.searchAccount(accountNumber).getAmount()- amount;
+        if(updatedAmount < 0){
+            throw new InsufficientBalanceException();
+        }
+        
+    }
+    else{
+        throw new InvalidAccountNumberException();
+    }
+
+    return updatedAmount;
+}
+
+		
+}
